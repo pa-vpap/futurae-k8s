@@ -1,0 +1,36 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: futurae
+  namespace: futurae
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: futurae
+  template:
+    metadata:
+      labels:
+        app: futurae
+    spec:
+      containers:
+      - name: futurae
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag}}"
+        env:
+        - name: PROJECT_ID
+          value: prj-futurae-d51c
+        - name: BUCKET_NAME
+          value: prj-futurae-d51c-futurae-bucket
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /secrets/gcp-credentials.json
+        volumeMounts:
+        - name: creds-sa
+          mountPath: /secrets
+          readOnly: true
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+      - name: creds-sa
+        secret:
+          secretName: gcp-creds
