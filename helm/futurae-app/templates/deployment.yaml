@@ -17,6 +17,8 @@ spec:
       containers:
       - name: futurae
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag}}"
+        ports:
+          - containerPort: 5000    
         env:
         - name: PROJECT_ID
           value: prj-futurae-d51c
