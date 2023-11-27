@@ -1,9 +1,10 @@
+#define docker image artifact path
 variable "docker_artifacts_repository" {
   type    = string
   default = "europe-west1-docker.pkg.dev/prj-futurae-d51c/futurae-app"
 }
 
-#helm char deployment  futurae
+#helm chart deployment  futurae
 resource "helm_release" "futurae-app" {
   name       = "futurae-app"
   chart      = "./helm/futurae-app"
